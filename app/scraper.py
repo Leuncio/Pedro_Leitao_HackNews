@@ -3,14 +3,14 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = "https://news.ycombinator.com/"
-NUM = "?p=3"
+URL = "https://news.ycombinator.com/?p="
+NUM = 1
 
 
 def number_of_articles(URL, NUM):
     """ This function will increase the number of articles to scrape """
 
-    response = requests.get(URL + NUM)
+    response = requests.get(URL + str(NUM))
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
         titles = soup.find_all("span", class_="titleline")
