@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 URL = "https://news.ycombinator.com/?p="
-NUM = 5
+NUM = 1
 
 def number_of_articles(URL, NUM):
     """This function scrapes article titles and links from Hacker News pages."""
@@ -26,8 +26,7 @@ def number_of_articles(URL, NUM):
 
     return list_of_articles
 
-# Teste local
-if __name__ == "__main__":
-    articles = number_of_articles(URL, NUM)
-    for title, href in articles:
-        print(title, "→", href)
+
+articles = number_of_articles(URL, NUM)
+for title, href in articles:
+    print(title, "→", href)
