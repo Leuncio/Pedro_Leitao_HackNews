@@ -1,7 +1,7 @@
 # __init__.py
 
 from flask import Flask
-from .routes import main_bp 
+from .views import main_bp 
 
 def create_app():
     app = Flask(__name__)  

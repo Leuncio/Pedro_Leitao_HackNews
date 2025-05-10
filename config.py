@@ -1,7 +1,7 @@
 # __init__.py
 
 from flask import Flask
-from app.routes import main_bp  # Import the main blueprint for routing
+from app.views import main_bp  # Import the main blueprint for routing
 
 def create_app():
     app = Flask(__name__)  
