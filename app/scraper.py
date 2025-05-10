@@ -1,26 +1,33 @@
-# scraper.py
-
 import requests
 from bs4 import BeautifulSoup
 
 URL = "https://news.ycombinator.com/?p="
-NUM = 1
-
+NUM = 5
 
 def number_of_articles(URL, NUM):
-    """ This function will increase the number of articles to scrape """
+    """This function scrapes article titles and links from Hacker News pages."""
+    list_of_articles = []
 
-    response = requests.get(URL + str(NUM))
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, "html.parser")
-        titles = soup.find_all("span", class_="titleline")
+    for i in range(1, NUM + 1):  # começa em 1 porque ?p=0 não existe
+        response = requests.get(URL + str(i))
 
-        for tag in titles:
-            link = tag.find("a")  # isso pega o <a href="...">
-            print(link.text, "→", link["href"])
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, "html.parser")
+            titles = soup.find_all("span", class_="titleline")
 
-    else:
-        print("Failed to fetch the page.")   
-        print("Status code:", response.status_code)
-    
-number_of_articles(URL, NUM)
+            for tag in titles:
+                link = tag.find("a")
+                if link:
+                    title = link.text
+                    href = link["href"]
+                    list_of_articles.append((title, href))
+        else:
+            print(f"Failed to fetch page {i} - Status code: {response.status_code}")
+
+    return list_of_articles
+
+# Teste local
+if __name__ == "__main__":
+    articles = number_of_articles(URL, NUM)
+    for title, href in articles:
+        print(title, "→", href)
